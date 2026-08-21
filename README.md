@@ -20,10 +20,60 @@ If y represents the dependent variable and x the independent variable, this rela
 ![image](https://user-images.githubusercontent.com/104613195/168225866-ac8f6610-bdc3-4ac2-a24e-2b24ba08e189.png)
 
 # Program :
+```
+import numpy as np
+import math
+import matplotlib.pyplot as plt
 
-![image](https://github.com/ramjan1729/Correlation_Regression/assets/103921593/9eb48cbf-8ca3-4cd9-8440-ff45fd98333e)
+x = [int(i) for i in input().split()]
+y = [int(i) for i in input().split()]
 
+N = len(x)
 
-# Result
+Sx = Sy = Sxy = Sx2 = Sy2 = 0
+
+for i in range(N):
+    Sx += x[i]
+    Sy += y[i]
+    Sxy += x[i] * y[i]
+    Sx2 += x[i] ** 2
+    Sy2 += y[i] ** 2
+
+# Correlation coefficient
+r = (N * Sxy - Sx * Sy) / (
+    math.sqrt(N * Sx2 - Sx ** 2) * math.sqrt(N * Sy2 - Sy ** 2)
+)
+
+print("The Correlation coefficient is %.3f" % r)
+
+# Regression coefficient (Y on X)
+byx = (N * Sxy - Sx * Sy) / (N * Sx2 - Sx ** 2)
+
+xmean = Sx / N
+ymean = Sy / N
+
+print("The Regression line Y on X is:")
+print("y = %.3f + %.3f(x - %.3f)" % (ymean, byx, xmean))
+
+# Plot
+plt.scatter(x, y, label="Data points")
+
+def Reg(x_val):
+    return ymean + byx * (x_val - xmean)
+
+x_plot = np.linspace(min(x), max(x), 100)
+y_plot = Reg(x_plot)
+
+plt.plot(x_plot, y_plot, 'r', label="Regression Line")
+plt.xlabel("X-data")
+plt.ylabel("Y-data")
+plt.legend()
+plt.grid(True)
+plt.show()
+```
 
 # Output 
+<img width="787" height="637" alt="image" src="https://github.com/user-attachments/assets/fcc83550-661c-4739-921c-42747c44bd15" />
+
+# Result
+Thus, the coefficient of correlation between the given X and Y data was calculated successfully, and the regression line of Y on X was obtained. The data points and regression line were also plotted successfully.
